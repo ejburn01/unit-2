@@ -34,7 +34,7 @@ function onEachFeature(feature, layer) {
 //function to retrieve the data and place it on the map
 function getData(){
     //load the data
-    fetch("data/CTA_L_Stations/CTA_RailStations-point.geojson")
+    fetch("data/CTA_-_Ridership_-__L__Station_Entries_-_Daily_Totals_2017-2023.geojson")
         .then(function(response){
             return response.json();
         })
