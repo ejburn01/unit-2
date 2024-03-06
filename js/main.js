@@ -1,14 +1,15 @@
 // Instantiates a map object given the 'map' HTML div element and sets the default view.
 var map;
 var minValue;
+var dataStats = {}; 
 
-// Instantiates a tile layer with the specified URL template.
-// Alters the max zoom and inherits from Layer to add an attribution claim at the corner of the map.
+// Instantiate a tile layer with the specified URL template.
+// Alter the max zoom and inherits from Layer to add an attribution claim at the corner of the map.
 function createMap(){
     //create the map
     map = L.map('map', {
-        center: [41.90, -87.7],
-        zoom: 11
+        center: [41.880703, -87.6288],
+        zoom: 15
     });
 
     //add OSM base tilelayer
@@ -23,11 +24,11 @@ function createMap(){
 function calcMinValue(data){
     //create empty array to store all data values
     var allValues = [];
-    //loop through each city
+    //loop through each stop
     for(var stop of data.features){
         //loop through each year
         for(var year = 2017; year <= 2023; year+=1){
-              //get population for current year
+              //get number of passengers for current station
               var value = Number(stop.properties["R_"+ String(year)].replace(',',''));
               //add value to array
               allValues.push(value);
@@ -44,7 +45,6 @@ function calcMinValue(data){
 function calcPropRadius(attValue) {
     //constant factor adjusts symbol sizes evenly
     var minRadius = 5;
-    //Flannery Appearance Compensation formula
     var radius = 1.0083 * Math.pow(attValue/minValue,0.5715) * minRadius
 
     return radius;
@@ -64,11 +64,8 @@ function onEachFeature(feature, layer) {
 
 //function to convert markers to circle markers
 function pointToLayer(feature, latlng, attributes){
-    //Determine which attribute to visualize with proportional symbols
     
     var attribute = attributes[0];
-    //check
-    console.log(attribute);
 
     //create marker options
     var options = {
@@ -76,7 +73,7 @@ function pointToLayer(feature, latlng, attributes){
         color: "#000",
         weight: 1,
         opacity: 1,
-        fillOpacity: 0.8
+        fillOpacity: 0.65
     };
 
     //For each feature, determine its value for the selected attribute
@@ -89,10 +86,15 @@ function pointToLayer(feature, latlng, attributes){
     var layer = L.circleMarker(latlng, options);
 
     //build popup content string
-    var popupContent = "<p><b>Station Name:</b> " + feature.properties.stationname + "</p><p><b>" + "7/4/2023 Total Passengers" + ":</b> " + feature.properties[attribute] + "</p>";
+    var popupContent = new PopupContent(feature.properties, attribute);
+
+    //create another popup based on the first
+    var popupContent2 = Object.create(popupContent);
+
+    popupContent2.formatted = "<h2>" + popupContent.riders + "</h2>";
 
     //bind the popup to the circle marker
-    layer.bindPopup(popupContent,{
+    layer.bindPopup(popupContent.formatted,{
         offset: new L.Point(0,-Math.sqrt(options.radius))
     });
 
@@ -108,6 +110,22 @@ function createPropSymbols(data, attributes){
     }).addTo(map);
 };
 
+function PopupContent(properties, attribute){
+    this.properties = properties;
+    this.attribute = attribute;
+    this.year = attribute.split("_")[1];
+    this.riders = this.properties[attribute];
+    this.formatted = "<p><b>Station Name:</b> " + this.properties.stationname + "</p><p><b>Total July 4th passengers in " + this.year + ":</b> " + this.riders + "</p>";
+};
+
+function createPopupContent(props, attribute){
+    var popupContent = "<p><b>Station Name:</b> " + props.stationname + "</p>";
+    
+    var year = attribute.split("_")[1];
+    popupContent += "<p><b>Total July 4th passengers in " + year + ":</b> " + props[attribute] + "</p>"
+    return popupContent;
+}
+
 function updatePropSymbols(attribute){
     map.eachLayer(function(layer){
         if (layer.feature && layer.feature.properties[attribute]){
@@ -118,38 +136,51 @@ function updatePropSymbols(attribute){
             var radius = calcPropRadius(Number(props[attribute].replace(",","")));
             layer.setRadius(radius);
 
-            console.log(radius)
-
             //add city to popup content string
-            var popupContent = "<p><b>Station Name:</b> " + props.stationname + "</p>";
+            var popupContent = new PopupContent(props, attribute);
 
-            //add formatted attribute to panel content string
-            var year = attribute.split("_")[1];
-            popupContent += "<p><b>Total July 4th passengers in " + year + ":</b> " + props[attribute] + "</p>";
-
-            //update popup content            
-            popup = layer.getPopup();            
-            popup.setContent(popupContent).update();
+            //update popup with new content    
+            popup = layer.getPopup();    
+            popup.setContent(popupContent.formatted).update();
         };
     });
+    //update the year in the legend
+    var year = attribute.split("_")[1];
+    document.querySelector("span.year").innerHTML = year
 };
 
-function createSequenceControls(attributes){
-    //create range input element (slider)
-    var slider = "<input class='range-slider' type='range'></input>";
-    document.querySelector("#panel").insertAdjacentHTML('beforeend',slider);
+function createSequenceControls(attributes){   
+    var SequenceControl = L.Control.extend({
+        options: {
+            position: 'bottomleft'
+        },
 
-    //set slider attributes
+        onAdd: function () {
+            // create the control container div
+            var container = L.DomUtil.create('div', 'sequence-control-container');
+
+            //create range input element (slider)
+            container.insertAdjacentHTML('beforeend', '<input class="range-slider" type="range">')
+
+            //add skip buttons
+            container.insertAdjacentHTML('beforeend', '<button class="step" id="reverse" title="Reverse"><img src="img/arrow-left.png"></button>'); 
+            container.insertAdjacentHTML('beforeend', '<button class="step" id="forward" title="Forward"><img src="img/arrow-right.png"></button>');
+
+            //disable any mouse event listeners for the container
+            L.DomEvent.disableClickPropagation(container);
+
+            return container;
+        }
+        
+    });
+
+    map.addControl(new SequenceControl());   
+
+    // add listeners after adding control
     document.querySelector(".range-slider").max = 6;
     document.querySelector(".range-slider").min = 0;
     document.querySelector(".range-slider").value = 0;
     document.querySelector(".range-slider").step = 1;
-
-    document.querySelector('#panel').insertAdjacentHTML('beforeend','<button class="step" id="reverse">Reverse</button>');
-    document.querySelector('#panel').insertAdjacentHTML('beforeend','<button class="step" id="forward">Forward</button>');
-
-    document.querySelector('#reverse').insertAdjacentHTML('beforeend',"<img src='img/arrow-left.png'>")
-    document.querySelector('#forward').insertAdjacentHTML('beforeend',"<img src='img/arrow-right.png'>")
 
     document.querySelector('.range-slider').addEventListener('input', function(){
         //Step 6: get the new index value
@@ -157,7 +188,6 @@ function createSequenceControls(attributes){
         console.log(index)
         updatePropSymbols(attributes[index]);
     });
-
     document.querySelectorAll('.step').forEach(function(step){
         step.addEventListener("click", function(){
             var index = document.querySelector('.range-slider').value;
@@ -179,7 +209,75 @@ function createSequenceControls(attributes){
             updatePropSymbols(attributes[index]);
         })
     })
+}
 
+function calcStats(data){
+    //create empty array to store all data values
+    var allValues = [];
+    //loop through each city
+    for(var station of data.features){
+        //loop through each year
+        for(var year = 2017; year <= 2023; year+=1){
+              //get number of passengers for current year
+              var value = station.properties["R_"+ String(year)];
+              //add value to array
+              allValues.push(Number(value.replace(",","")));
+        }
+    }
+    //get min, max, mean stats for our array
+    dataStats.min = Math.min(...allValues);
+    dataStats.max = Math.max(...allValues);
+    //calculate meanValue
+    var sum = allValues.reduce(function(a, b){return a+b;});
+    dataStats.mean = sum/ allValues.length;
+}    
+
+function createLegend(){
+
+    var LegendControl = L.Control.extend({
+        options: {
+            position: 'bottomright'
+        },
+
+        onAdd: function () {
+            // create the control container with a particular class name
+            var container = L.DomUtil.create('div', 'legend-control-container');
+
+            container.innerHTML = '<h4 class="temporalLegend">Daily L-station passenger entries, July 4th <span class="year">2017</span></h4>';
+
+            //Step 1: start attribute legend svg string
+            var svg = '<svg id="attribute-legend" width="300px" height="130px">';
+
+             //array of circle names to base loop on
+            var circles = ["max", "mean", "min"];
+
+            //Step 2: loop to add each circle and text to svg string  
+            for (var i=0; i<circles.length; i++){  
+
+                //Step 3: assign the r and cy attributes  
+                var radius = calcPropRadius(dataStats[circles[i]]);  
+                var cy = 130 - radius;  
+
+                //circle string  
+                svg += '<circle class="legend-circle" id="' + circles[i] + '" r="' + radius + '"cy="' + cy + '" fill="#F47821" fill-opacity="0.8" stroke="#000000" cx="65"/>';  
+
+                //evenly space out labels            
+                var textY = i * 50 + 25;            
+
+                //text string            
+                svg += '<text id="' + circles[i] + '-text" x="135" y="' + textY + '">' + Math.round(dataStats[circles[i]]*100)/100 + '</text>';
+            };  
+
+            //close svg string  
+            svg += "</svg>"; 
+            
+            //add attribute legend svg to container
+            container.insertAdjacentHTML('beforeend',svg);
+
+            return container;
+        }
+    });
+    map.addControl(new LegendControl());
 };
 
 function processData(data){
@@ -197,28 +295,25 @@ function processData(data){
         };
     };
 
-    //check result
-    console.log(attributes);
-
     return attributes;
 };
 
 //function to retrieve the data and place it on the map
 function getData(){
     //load the data
-    fetch("data/CTA_-_Ridership_-__L__Station_Entries_-_Daily_Totals_2017-2023.geojson")
-    //fetch("data/CTA_L_Stations/CTA_RailStations-point.geojson")
+    fetch("data/CTA_July4_Loop_Daily_Totals_2017-2023.geojson")
         .then(function(response){
             return response.json();
         })
         .then(function(json){
+            calcStats(json); 
             var attributes = processData(json);
             //calculate minimum data value
             minValue = calcMinValue(json);
-            //console.log(minValue)
             //call function to create proportional symbols
             createPropSymbols(json, attributes);
             createSequenceControls(attributes);
+            createLegend();
         })
 };
 

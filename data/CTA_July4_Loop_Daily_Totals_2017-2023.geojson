@@ -5,66 +5,6 @@
     "type": "Feature",
     "geometry": {
        "type": "Point",
-       "coordinates":  [ -87.65338625,41.93975861 ]
-    },
-    "properties": {
-    "station_id":41320,
-    "stationname":"Belmont-North Main",
-    "date":"7/4/2017",
-    "daytype":"U",
-    "R_2017":"7,925",
-    "R_2018":"6,622",
-    "R_2019":"5,638",
-    "R_2020":"1,426",
-    "R_2021":"3,983",
-    "R_2022":"2,866",
-    "R_2023":"3,679"
-    }
-  },
-  {
-    "type": "Feature",
-    "geometry": {
-       "type": "Point",
-       "coordinates":  [ -87.63097357,41.85321365 ]
-    },
-    "properties": {
-    "station_id":41000,
-    "stationname":"Cermak-Chinatown",
-    "date":"7/4/2017",
-    "daytype":"U",
-    "R_2017":"3,913",
-    "R_2018":"3,508",
-    "R_2019":"3,817",
-    "R_2020":"630",
-    "R_2021":"2,730",
-    "R_2022":"2,335",
-    "R_2023":"2,981"
-    }
-  },
-  {
-    "type": "Feature",
-    "geometry": {
-       "type": "Point",
-       "coordinates":  [ -87.6281821,41.89667907 ]
-    },
-    "properties": {
-    "station_id":41450,
-    "stationname":"Chicago/State",
-    "date":"7/4/2017",
-    "daytype":"U",
-    "R_2017":"12,115",
-    "R_2018":"9,868",
-    "R_2019":"10,105",
-    "R_2020":"1,780",
-    "R_2021":"4,276",
-    "R_2022":"3,904",
-    "R_2023":"4,635"
-    }
-  },
-  {
-    "type": "Feature",
-    "geometry": {
-       "type": "Point",
        "coordinates":  [ -87.6261,41.8795 ]
     },
     "properties": {
@@ -265,66 +205,6 @@
     "type": "Feature",
     "geometry": {
        "type": "Point",
-       "coordinates":  [ -87.63097357,41.85321365 ]
-    },
-    "properties": {
-    "station_id":41000,
-    "stationname":"Cermak-Chinatown",
-    "date":"7/4/2017",
-    "daytype":"U",
-    "R_2017":"3,913",
-    "R_2018":"3,508",
-    "R_2019":"3,817",
-    "R_2020":"630",
-    "R_2021":"2,730",
-    "R_2022":"2,335",
-    "R_2023":"2,981"
-    }
-  },
-  {
-    "type": "Feature",
-    "geometry": {
-       "type": "Point",
-       "coordinates":  [ -87.6281821,41.89667907 ]
-    },
-    "properties": {
-    "station_id":41450,
-    "stationname":"Chicago/State",
-    "date":"7/4/2017",
-    "daytype":"U",
-    "R_2017":"12,115",
-    "R_2018":"9,868",
-    "R_2019":"10,105",
-    "R_2020":"1,780",
-    "R_2021":"4,276",
-    "R_2022":"3,904",
-    "R_2023":"4,635"
-    }
-  },
-  {
-    "type": "Feature",
-    "geometry": {
-       "type": "Point",
-       "coordinates":  [ -87.63141805,41.90392817 ]
-    },
-    "properties": {
-    "station_id":40630,
-    "stationname":"Clark/Division",
-    "date":"7/4/2017",
-    "daytype":"U",
-    "R_2017":"5,898",
-    "R_2018":"6,068",
-    "R_2019":"5,175",
-    "R_2020":"1,132",
-    "R_2021":"3,446",
-    "R_2022":"2,401",
-    "R_2023":"3,050"
-    }
-  },
-  {
-    "type": "Feature",
-    "geometry": {
-       "type": "Point",
        "coordinates":  [ -87.63089177,41.88574484 ]
     },
     "properties": {
@@ -345,46 +225,6 @@
     "type": "Feature",
     "geometry": {
        "type": "Point",
-       "coordinates":  [ -87.6528716,41.92505923 ]
-    },
-    "properties": {
-    "station_id":41220,
-    "stationname":"Fullerton",
-    "date":"7/4/2017",
-    "daytype":"U",
-    "R_2017":"4,669",
-    "R_2018":"4,628",
-    "R_2019":"4,230",
-    "R_2020":"919",
-    "R_2021":"2,631",
-    "R_2022":"2,131",
-    "R_2023":"2,758"
-    }
-  },
-  {
-    "type": "Feature",
-    "geometry": {
-       "type": "Point",
-       "coordinates":  [ -87.62802701,41.89167306 ]
-    },
-    "properties": {
-    "station_id":40330,
-    "stationname":"Grand/State",
-    "date":"7/4/2017",
-    "daytype":"U",
-    "R_2017":"13,553",
-    "R_2018":"13,101",
-    "R_2019":"11,237",
-    "R_2020":"1,478",
-    "R_2021":"5,670",
-    "R_2022":"4,745",
-    "R_2023":"5,441"
-    }
-  },
-  {
-    "type": "Feature",
-    "geometry": {
-       "type": "Point",
        "coordinates":  [ -87.62781913,41.88481672 ]
     },
     "properties": {
@@ -399,66 +239,6 @@
     "R_2021":"5,077",
     "R_2022":"4,699",
     "R_2023":"5,669"
-    }
-  },
-  {
-    "type": "Feature",
-    "geometry": {
-       "type": "Point",
-       "coordinates":  [ -87.90185424,41.97888459 ]
-    },
-    "properties": {
-    "station_id":40890,
-    "stationname":"O'Hare Airport",
-    "date":"7/4/2017",
-    "daytype":"U",
-    "R_2017":"11,952",
-    "R_2018":"10,597",
-    "R_2019":"11,337",
-    "R_2020":"2,046",
-    "R_2021":"4,921",
-    "R_2022":"7,183",
-    "R_2023":"7,464"
-    }
-  },
-  {
-    "type": "Feature",
-    "geometry": {
-       "type": "Point",
-       "coordinates":  [ -87.62659563,41.86741281 ]
-    },
-    "properties": {
-    "station_id":41400,
-    "stationname":"Roosevelt",
-    "date":"7/4/2017",
-    "daytype":"U",
-    "R_2017":"7,882",
-    "R_2018":"8,264",
-    "R_2019":"7,665",
-    "R_2020":"2,106",
-    "R_2021":"3,657",
-    "R_2022":"3,526",
-    "R_2023":"5,099"
-    }
-  },
-  {
-    "type": "Feature",
-    "geometry": {
-       "type": "Point",
-       "coordinates":  [ -87.63064204,41.83119841 ]
-    },
-    "properties": {
-    "station_id":40190,
-    "stationname":"Sox-35th-Dan Ryan",
-    "date":"7/4/2017",
-    "daytype":"U",
-    "R_2017":"2,463",
-    "R_2018":"2,323",
-    "R_2019":"6,669",
-    "R_2020":"652",
-    "R_2021":"725",
-    "R_2022":"3,614",
-    "R_2023":"4,606"
     }
   },
   {
@@ -519,26 +299,6 @@
     "R_2021":"2,718",
     "R_2022":"2,754",
     "R_2023":"3,515"
-    }
-  },
-  {
-    "type": "Feature",
-    "geometry": {
-       "type": "Point",
-       "coordinates":  [ -87.65773981,41.96426203 ]
-    },
-    "properties": {
-    "station_id":40540,
-    "stationname":"Wilson",
-    "date":"7/4/2017",
-    "daytype":"U",
-    "R_2017":"2,499",
-    "R_2018":"3,564",
-    "R_2019":"3,515",
-    "R_2020":"1,235",
-    "R_2021":"2,386",
-    "R_2022":"2,032",
-    "R_2023":"3,011"
     }
   }
 ]

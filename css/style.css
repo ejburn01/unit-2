@@ -1,29 +1,42 @@
 /*Add CSS styles here*/
 #map {    
-    height: 650px;    
-    width: 60%;
+    height: 680px;    
+    width: 100%;
     display: inline-block;
     }
-
-    #panel {  
-        width: 30%;  
-        padding: 20px;  
-        display: inline-block;  
-        vertical-align: top;  
-        text-align: center;  
-        line-height: 42px;  
-    }
     
+    .legend-control-container {
+        width: 325px;  
+        height: 215px;  
+        background-color: rgba(255,255,255,0.8);  
+        padding: 10px;  
+        line-height: 20px;  
+        text-align: left;
+        font-size: 16px;
+        border: solid gray 1px; 
+    }
+
+    .sequence-control-container {
+        width: 350px;  
+        height: 30px;  
+        background-color: rgba(255,255,255,0.8);  
+        padding: 10px;  
+        line-height: 45px;  
+        text-align: center;  
+        border: solid gray 1px; 
+    }
+
     .range-slider {  
-        width: 55%;  
+        width: 250px;  
     }  
     
     .step {  
-        width: 20%;  
+        width: 40px;  
     }  
     
     .step img {  
-        width: 100%;  
+        width: 100%;
+        height: auto;  
     }  
     
     #forward {
